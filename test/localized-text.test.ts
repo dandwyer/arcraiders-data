@@ -12,10 +12,9 @@ const root = resolve(import.meta.dir, "..");
 // present and that there are no unrecognized keys. This ensures that new locales
 // are added to the type and tests will surface instances where translations may be missing
 // from various entities like items, maps, and projects.
-const LocalizedTextStrict =
-  lt.__internal__.LocalizedTextCanonical.strict().describe(
-    "LocalizedTextStrict"
-  );
+const LocalizedTextStrict = lt.LocalizedText.strict().describe(
+  "LocalizedTextStrict"
+);
 
 function getParseError(result: z.ZodSafeParseResult<any>): string | undefined {
   if (result.success) {
@@ -26,15 +25,13 @@ function getParseError(result: z.ZodSafeParseResult<any>): string | undefined {
 }
 
 function getNumLocalizedTextInstances(json: string): number {
-  // TODO: Note that we can expand this to `(@.en && @.es)` or similar when xfail issues
-  // are addressed (i.e. Hurricane map condition excluding all but english translation)
   return JSONPath({
-    path: "$..[?(@.en)]",
+    path: "$..[?(@.en && @.es)]",
     json: json
   }).length;
 }
 
-test("xfail: validate locale directories match LocalizedText struct", async () => {
+test("validate locale directories match LocalizedText struct", async () => {
   const glob = new Glob(`${root}/arctracker-ui/*.json`);
   const actualLocales = new Set<string>();
   for await (const path of glob.scan()) {
@@ -52,7 +49,7 @@ test("xfail: validate locale directories match LocalizedText struct", async () =
       ++errorCount;
     }
   }
-  expect(errorCount).toBe(1); // Remove xfail when this is 0
+  expect(errorCount).toBe(0);
 });
 
 test("validate strict schema w/ small trinket item", () => {
@@ -63,9 +60,7 @@ test("validate strict schema w/ small trinket item", () => {
   );
 });
 
-test("xfail: validate strict schema w/ all maps", async () => {
-  const xfailError = `✖ Invalid input: expected string, received undefined
-  → at he`;
+test("validate strict schema w/ all maps", async () => {
   const maps = require(`${root}/maps.json`);
   const expectedNumEvaluations = getNumLocalizedTextInstances(maps);
   var errorCount = 0;
@@ -74,12 +69,11 @@ test("xfail: validate strict schema w/ all maps", async () => {
     const error = getParseError(LocalizedTextStrict.safeParse(map.name));
     if (error) {
       console.error(`Validation failed for ${map.id}, ${error}`);
-      expect(error).toBe(xfailError);
       ++errorCount;
     }
     ++numEvaluations;
   }
-  expect(errorCount).toBe(6); // Remove xfail when this is 0
+  expect(errorCount).toBe(0);
   expect(numEvaluations).toBe(expectedNumEvaluations);
 });
 
@@ -211,10 +205,7 @@ test("validate strict schema w/ all hideouts", async () => {
   expect(numEvaluations).toBe(expectedNumEvaluations);
 });
 
-test("xfail: validate strict schema w/ all items", async () => {
-  const xfailError = `✖ Unrecognized key: "kr"
-✖ Invalid input: expected string, received undefined
-  → at ["ko-KR"]`;
+test("validate strict schema w/ all items", async () => {
   const glob = new Glob(`${root}/items/*.json`);
   var errorCount = 0;
   for await (const path of glob.scan()) {
@@ -222,7 +213,6 @@ test("xfail: validate strict schema w/ all items", async () => {
     const error = getParseError(LocalizedTextStrict.safeParse(data.name));
     if (error) {
       console.error(`Validation failed for ${data.id}, ${error}`);
-      expect(error).toBe(xfailError);
       ++errorCount;
     }
     if (data.description) {
@@ -233,12 +223,11 @@ test("xfail: validate strict schema w/ all items", async () => {
         console.error(
           `Validation failed for ${data.id}->description, ${error}`
         );
-        expect(error).toBe(xfailError);
         ++errorCount;
       }
     }
   }
-  expect(errorCount).toBe(12); // Remove xfail when this is 0
+  expect(errorCount).toBe(0);
 });
 
 // The value of this test relative to the previous one is
@@ -266,7 +255,7 @@ test("validate schema w/ all items", async () => {
   expect(errorCount).toBe(0);
 });
 
-test("xfail: validate strict schema w/ all map events", async () => {
+test("validate strict schema w/ all map events", async () => {
   interface MapEvent {
     localizations: z.infer<typeof lt.LocalizedText>;
   }
@@ -287,7 +276,7 @@ test("xfail: validate strict schema w/ all map events", async () => {
       ++errorCount;
     }
   }
-  expect(errorCount).toBe(15); // Remove xfail when this is 0
+  expect(errorCount).toBe(0);
   expect(numEvaluations).toBe(expectedNumEvaluations);
 });
 
