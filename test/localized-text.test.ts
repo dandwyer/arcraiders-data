@@ -12,10 +12,9 @@ const root = resolve(import.meta.dir, "..");
 // present and that there are no unrecognized keys. This ensures that new locales
 // are added to the type and tests will surface instances where translations may be missing
 // from various entities like items, maps, and projects.
-const LocalizedTextStrict =
-  lt.__internal__.LocalizedTextCanonical.strict().describe(
-    "LocalizedTextStrict"
-  );
+const LocalizedTextStrict = lt.LocalizedText.strict().describe(
+  "LocalizedTextStrict"
+);
 
 function getParseError(result: z.ZodSafeParseResult<any>): string | undefined {
   if (result.success) {
@@ -26,10 +25,8 @@ function getParseError(result: z.ZodSafeParseResult<any>): string | undefined {
 }
 
 function getNumLocalizedTextInstances(json: string): number {
-  // TODO: Note that we can expand this to `(@.en && @.es)` or similar when xfail issues
-  // are addressed (i.e. Hurricane map condition excluding all but english translation)
   return JSONPath({
-    path: "$..[?(@.en)]",
+    path: "$..[?(@.en && @.es)]",
     json: json
   }).length;
 }
