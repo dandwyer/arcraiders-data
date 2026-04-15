@@ -1,18 +1,24 @@
 {
+  "_reference1": "https://nodejs.org/api/packages.html#nodejs-packagejson-field-definitions",
+  "_reference2": "https://docs.npmjs.com/cli/v8/configuring-npm/package-json",
   "name": "arcraiders-data",
+  "main": "./dist/index.js",
   "type": "module",
   "scripts": {
     "check": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "postinstall": "bunx tsc",
+    "test": "bunx tsc && bun run check && bun test"
   },
   "devDependencies": {
-    "prettier": "^3.6.2",
+    "@types/bun": "latest",
+    "jsonpath-plus": "^10.4.0",
     "prettier-plugin-sort-json": "^4.1.1",
+    "prettier": "^3.6.2",
     "safe-stable-stringify": "^2.5.0"
   },
   "private": true,
   "dependencies": {
-    "jsonpath-plus": "^10.4.0",
     "zod": "^4.3.6"
   }
 }
