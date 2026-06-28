@@ -23,9 +23,9 @@
     "zh-TW": "加長槍管 I"
   },
   "description": {
-    "en": "Slightly increases bullet velocity and damage falloff range. Compatible with: Tempest, Arpeggio, Ferro, Renegade, Anvil",
     "da": "Øger kuglehastigheden og afstanden før skadefald en smule. Kompatibel med: Tempest, Arpeggio, Ferro, Renegade, Anvil",
     "de": "Erhöht die Geschossgeschwindigkeit und die Reichweite bis zum Schadensabfall leicht. Kompatibel mit: Tempest, Arpeggio, Ferro, Renegade, Anvil",
+    "en": "Slightly increases bullet velocity and damage falloff range. Compatible with: Tempest, Arpeggio, Ferro, Renegade, Anvil",
     "es": "Aumenta ligeramente la velocidad de las balas y el alcance antes de la caída de daño. Compatible con: Tempestad, Arpeggio, Ferro, Renegado, Yunque",
     "fr": "Augmente légèrement la vélocité des balles et la portée avant la perte de dégâts. Compatible avec : Tempest, Arpeggio, Ferro, Renegade, Anvil",
     "he": "מגביר מעט את מהירות הקליע ואת הטווח לפני דעיכת הנזק. תואם ל: Tempest, Arpeggio, Ferro, Renegade, Anvil",
@@ -66,9 +66,9 @@
   "effects": {
     "Increased Bullet Velocity": {
       "value": "10%",
-      "en": "Increased Bullet Velocity",
       "da": "Øget kuglehastighed",
       "de": "Erhöhte Geschossgeschwindigkeit",
+      "en": "Increased Bullet Velocity",
       "es": "Velocidad de bala aumentada",
       "fr": "Vélocité des balles augmentée",
       "he": "מהירות קליע מוגברת",
@@ -89,9 +89,9 @@
     },
     "Increased Distance Until Damage Falloff": {
       "value": "5%",
-      "en": "Increased Distance Until Damage Falloff",
       "da": "Øget afstand før skadefald",
       "de": "Erhöhte Reichweite bis zum Schadensabfall",
+      "en": "Increased Distance Until Damage Falloff",
       "es": "Mayor distancia antes de la caída de daño",
       "fr": "Distance augmentée avant la perte de dégâts",
       "he": "מרחק מוגבר לפני דעיכת הנזק",
